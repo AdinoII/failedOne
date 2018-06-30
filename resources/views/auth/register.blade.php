@@ -1,119 +1,94 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Register
-                </h1>
-            </div>
-        </div>
-    </section>
-
-    <div class="columns is-marginless is-centered">
-        <div class="column is-5">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Register</p>
-                </header>
+                <div class="card-header">{{ __('Register') }}</div>
 
-                <div class="card-content">
-                    <form class="register-form" method="POST" action="{{ route('register') }}">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                        @csrf
 
-                        {{ csrf_field() }}
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">Name</label>
-                            </div>
+                            <div class="col-md-6">                               
+                                @if(!empty($name))
+                                  <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autofocus>
+                                @else
+                                  <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                @endif
 
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="name" type="name" name="name" value="{{ old('name') }}"
-                                               required autofocus>
-                                    </p>
-
-                                    @if ($errors->has('name'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('name') }}
-                                        </p>
-                                    @endif
-                                </div>
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">E-mail Address</label>
-                            </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="email" type="email" name="email"
-                                               value="{{ old('email') }}" required autofocus>
-                                    </p>
-
-                                    @if ($errors->has('email'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('email') }}
-                                        </p>
-                                    @endif
-                                </div>
+                            <div class="col-md-6">                                
+                                @if(!empty($email))
+                                  <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autofocus>
+                                @else
+                                  <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                @endif
+                                
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">Password</label>
-                            </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="password" type="password" name="password" required>
-                                    </p>
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-                                    @if ($errors->has('password'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('password') }}
-                                        </p>
-                                    @endif
-                                </div>
+                                @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">Confirm Password</label>
-                            </div>
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="password-confirm" type="password"
-                                               name="password_confirmation" required>
-                                    </p>
-                                </div>
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label"></div>
-
-                            <div class="field-body">
-                                <div class="field is-grouped">
-                                    <div class="control">
-                                        <button type="submit" class="button is-primary">Register</button>
-                                    </div>
-                                </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
                             </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                          <label class="col-md-4 control-label">Or register with</label>
+                          <div class="row">
+                          </div>
+                          <div class="col-md-8 col-md-offset-2">
+                            <a href="{{ url('login/facebook') }}" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                            <a href="{{ url('login/google') }}" class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i> Google</a>
+                          </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

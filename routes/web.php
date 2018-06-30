@@ -18,3 +18,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/login/{social}','Auth\LoginController@socialLogin')
+        ->where('social','facebook|google|github');
+Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')
+        ->where('social','facebook|google|github');
